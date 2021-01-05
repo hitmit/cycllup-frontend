@@ -1,0 +1,93 @@
+
+#global-header .drop-down-menu:hover, #global-header .drop-down-menu.active {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-color: #fff;
+}
+
+#global-header .nav-group .drop-down-menu:hover .nav-link, #global-header .nav-group .drop-down-menu.active .nav-link {
+    color: #fc5200;
+    z-index: 31;
+    border-radius: 0;
+    background-color: #fff;
+    border-left-color: #dfdfe8;
+    border-right-color: #dfdfe8;
+    border-bottom-color: #fff;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.list-stats.text-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+
+element.style {
+}
+.list-stats.text-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.text-center {
+    text-align: center;
+}
+.list-stats {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.stat-subtext {
+    font-size: 12px;
+    font-weight: 400;
+    color: #494950;
+    line-height: 1.2;
+}
+.list-stats li:after {
+    content: '';
+    display: block;
+    border-right: 1px solid #f0f0f5;
+    height: 24px;
+    width: 1px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -12px;
+}
+
+#athlete-profile .list-stats li {
+    width: 33.333%;
+    margin: 0;
+    padding: 0;
+}
+
+.list-stats.text-center li, .list-stats.text-center .stat {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+#athlete-profile .athlete-name {
+    line-height: 1.25;
+}

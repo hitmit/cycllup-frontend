@@ -11,12 +11,22 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+      },
+    ],
+    script: [
+      { src: 'https://code.jquery.com/jquery-3.3.1.slim.min.js' },
+      { src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js' }
     ]
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
+    '@/assets/css/bootstrap.min.css',
+    '@/assets/css/custom.css'
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -32,9 +42,49 @@ export default {
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
+    'nuxt-sweetalert2',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  }
+  },
+
+  axios: {
+    baseURL: 'https://dev-cycllup.pantheonsite.io',
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/user/login?_format=json', method: 'post', propertyName: 'csrf_token' },
+          logout: false,
+          user: false,
+        },
+        // tokenRequired: true,
+        tokenType: '',
+        // globalToken: true,
+        // autoFetchUser: true
+      }
+    }
+  },
+
+  /**
+   * Set ssr to false to see the loading indicator - https://nuxtjs.org/docs/2.x/features/rendering-modes
+   */
+  ssr: false,
+
+  /**
+   * modifying the loading indicator for spa  - https://nuxtjs.org/docs/2.x/features/loading
+   */
+  loadingIndicator: {
+    name: 'circle',
+    color: '#3B8070',
+    background: 'white'
+  },
+
+  loading: '~/components/layout/Loading.vue'
+
 }
