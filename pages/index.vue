@@ -1,10 +1,11 @@
 <template>
-  <div class="container">
-      <Logo />
-      <h1>Home Page</h1>
-  </div>
+    <div class="container">
+        <h1>Home Page</h1>
+    </div>
 </template>
 
 <script>
-export default {}
+export default {
+    auth: false
+}
 </script>

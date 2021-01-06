@@ -22,17 +22,21 @@
                     <template v-if="$auth.loggedIn">
                         <li class="nav-item dropdown drop-down-menu">
                             <a class="nav-link dropdown-toggle selection" href="#" id="navbarUserDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <i class="fa fa-user" aria-hidden="true"></i> {{currentUser.name}}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarUserDropdown">
-                                <a class="dropdown-item" href="#">
+                                <nuxt-link class="dropdown-item" to="/my-profile">
+                                    <a>
                                     <span class="upload-activity app-icon icon-upload-activity"></span>
                                     My Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
+                                    </a>
+                                </nuxt-link>
+                                <nuxt-link class="dropdown-item" to="/my-settings">
+                                    <a>
                                     <span class="upload-activity-manual app-icon icon-upload-activity-manual"></span>
                                     Settings
-                                </a>
+                                    </a>
+                                </nuxt-link>
                                 <a class="dropdown-item"  @click.prevent="logout()" href="#">
                                     <span class="upload-route app-icon icon-upload-route"></span>
                                     Logout
@@ -45,22 +49,24 @@
                                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="#" @click.prevent="commmingSoon">
                                     <span class="upload-activity app-icon icon-upload-activity"></span>
                                     Upload activity
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="#" @click.prevent="commmingSoon">
                                     <span class="upload-activity-manual app-icon icon-upload-activity-manual"></span>
                                     Add manual entry
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="#" @click.prevent="commmingSoon">
                                     <span class="upload-route app-icon icon-upload-route"></span>
                                     Create a route
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <span class="create-post app-icon icon-create-post"></span>
-                                    Create a post
-                                </a>
+                                <nuxt-link class="dropdown-item" to="/posts/new">
+                                    <a>
+                                        <span class="create-post app-icon icon-create-post"></span>
+                                        Create a post
+                                    </a>
+                                </nuxt-link>
                             </div>
                         </li>
                     </template>
@@ -81,7 +87,21 @@
 import api from '@/helper/api';
 
 export default {
+    computed: {
+        currentUser() {
+            var user = localStorage.getItem('currentUser');
+            return JSON.parse(user);
+        }
+    },
     methods: {
+        commmingSoon() {
+            this.$swal({
+                type: 'success',
+                title: 'Comming Soon!!',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        },
         async logout() {
             try {
                 let vm = this;

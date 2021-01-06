@@ -28,10 +28,11 @@
 import api from '@/helper/api';
 
 export default {
-    loading: false,
+    auth: false,
     data() {
         return {
-            user: {}
+            user: {},
+            loading: false,
         }
     },
     methods: {
