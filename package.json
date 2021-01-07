@@ -13,6 +13,7 @@
     "@nuxtjs/axios": "^5.12.5",
     "core-js": "^3.6.5",
     "nuxt": "^2.14.6",
+    "nuxt-cookie-control": "^1.9.6",
     "nuxt-sweetalert2": "^1.0.0"
   },
   "devDependencies": {}

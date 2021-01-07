@@ -44,7 +44,8 @@ export default {
   modules: [
     'nuxt-sweetalert2',
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    'nuxt-cookie-control'
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
