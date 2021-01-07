@@ -83,13 +83,13 @@
                             <li>
                                 <a class="stat" href="/athletes/73696971/follows?type=following">
                                     <div class="stat-subtext">Following</div>
-                                    <b class="stat-text">{{followingCount}}</b>
+                                    <b class="stat-text">0</b>
                                 </a>
                             </li>
                             <li>
                                 <a class="stat" href="/athletes/73696971/follows?type=followers">
                                     <div class="stat-subtext">Followers</div>
-                                    <b class="stat-text">{{followersCount}}</b>
+                                    <b class="stat-text">0</b>
                                 </a>
                             </li>
                             <li>
