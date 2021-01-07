@@ -8,13 +8,15 @@
                     </h3>
                     <ul class="list-stats text-center">
                         <li>
-                            <a class="stat" href="/athletes/73696971/follows?type=following"><div class="stat-subtext">Following</div>
-                                <b class="stat-text">0</b>
+                            <a class="stat" href="/athletes/73696971/follows?type=following">
+                                <div class="stat-subtext">Following</div>
+                                <b class="stat-text">{{followingCount}}</b>
                             </a>
                         </li>
                         <li>
-                            <a class="stat" href="/athletes/73696971/follows?type=followers"><div class="stat-subtext">Followers</div>
-                                <b class="stat-text">0</b>
+                            <a class="stat" href="/athletes/73696971/follows?type=followers">
+                                <div class="stat-subtext">Followers</div>
+                                <b class="stat-text">{{followersCount}}</b>
                             </a>
                         </li>
                         <li>
@@ -111,20 +113,32 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
     middleware: ['auth'],
     computed: {
         currentUser() {
-            console.log()
             var user = localStorage.getItem('currentUser');
             return JSON.parse(user);
-        }
+        },
+        ...mapGetters({
+            followersCount: 'user/followersCount',
+            followingCount: 'user/followingCount',
+        }),
     },
     data() {
         return {
         }
     },
     methods: {
+        
+    },
+    mounted() {
+        let vm = this;
+        let user = this.currentUser;
+        this.$store.dispatch('user/getFollowers', user.uid);
+        this.$store.dispatch('user/getFollowing', user.uid);
         
     }
 }
