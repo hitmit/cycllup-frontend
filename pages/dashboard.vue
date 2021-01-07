@@ -63,7 +63,7 @@
                 <img class="card-img-top" src="https://d3nn82uaxijpm6.cloudfront.net/assets/onboarding/header_image-39d887c771c7094d2adeb4fe67589f471f70bb3fc26e66b69a7e4edf29f90ce6.jpg" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Getting Started</h5>
-                    <p class="card-text">We’ve listed a couple of steps to help you get set up on Strava.</p>
+                    <p class="card-text">We’ve listed a couple of steps to help you get set up on cycllup.</p>
                 </div>
             </div>
             <div class="card">
@@ -73,8 +73,8 @@
                         <h5 class="mt-0">Get our free app</h5>
                         <p>Record, analyze and share activities right from your phone. Our free mobile app keeps you connected with friends and ready for the next workout.</p>
                         <div class="inset upload-links">
-                            <a href="https://itunes.apple.com/app/strava-cycling/id426826309?mt=8"><img alt="Download the Strava iOS App on the App Store" src="https://d3nn82uaxijpm6.cloudfront.net/assets/marketing/btn-app-store-ce6d7e854676cd9d99ca5d718bb8b55a3c579fc87783d0d1e2f7aff0307efd66.png"></a>
-                            <a href="https://play.google.com/store/apps/details?id=com.strava"><img alt="Strava Android App on Google Play" src="https://d3nn82uaxijpm6.cloudfront.net/assets/marketing/btn-google-play-1af0a2be816284e40414957321dc112dc8ed3e1f7de6d3d0b0dad8787ed58028.svg"></a>
+                            <a href="https://itunes.apple.com/app/cycllup-cycling/id426826309?mt=8"><img alt="Download the cycllup iOS App on the App Store" src="https://d3nn82uaxijpm6.cloudfront.net/assets/marketing/btn-app-store-ce6d7e854676cd9d99ca5d718bb8b55a3c579fc87783d0d1e2f7aff0307efd66.png"></a>
+                            <a href="https://play.google.com/store/apps/details?id=com.cycllup"><img alt="cycllup Android App on Google Play" src="https://d3nn82uaxijpm6.cloudfront.net/assets/marketing/btn-google-play-1af0a2be816284e40414957321dc112dc8ed3e1f7de6d3d0b0dad8787ed58028.svg"></a>
                         </div>
                     </div>
                 </div>
@@ -87,9 +87,9 @@
                         <img alt="" class="media-img" height="50" width="50" src="https://d3nn82uaxijpm6.cloudfront.net/assets/application/dashboard/sidebar-badge-clubs-dda5c075f23e3f2ced7d0e4b2afb87df988978962b6de33c7a232be53b6a75ca.png">
                     </div>
                     <div class="media-body">
-                        <h6 class="text-subhead text-strong media-title">Clubs on Strava</h6>
+                        <h6 class="text-subhead text-strong media-title">Clubs on cycllup</h6>
                         <p class="media-text">
-                            Why do it alone? Get more out of your Strava experience by joining or creating a Club.
+                            Why do it alone? Get more out of your cycllup experience by joining or creating a Club.
                         </p>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                         <img alt="" class="media-img" height="50" width="50" src="https://d3nn82uaxijpm6.cloudfront.net/assets/application/dashboard/sidebar-badge-challenges-9908f45d44160c600a4f9d788795b180a74001daae32461705f5f57d90a7c651.png">
                     </div>
                     <div class="media-body">
-                        <h6 class="text-subhead  text-strong media-title">Your Friends On Strava</h6>
+                        <h6 class="text-subhead  text-strong media-title">Your Friends On cycllup</h6>
                         <p class="media-text">
                             Find and invite friends to see their adventures and share some encouragement.
                         </p>
