@@ -11,3 +11,7 @@
 .card-profile-stats {
     padding: none;
 }
+
+.card-profile-stats>div {
+    margin-right: 0px;
+}

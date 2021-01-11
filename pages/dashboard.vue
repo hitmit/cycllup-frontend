@@ -78,10 +78,6 @@
                     <div class="media-body">
                         <h5 class="mt-0">Get our free app</h5>
                         <p>Record, analyze and share activities right from your phone. Our free mobile app keeps you connected with friends and ready for the next workout.</p>
-                        <div class="inset upload-links">
-                            <a href="https://itunes.apple.com/app/cycllup-cycling/id426826309?mt=8"><img alt="Download the cycllup iOS App on the App Store" src="https://d3nn82uaxijpm6.cloudfront.net/assets/marketing/btn-app-store-ce6d7e854676cd9d99ca5d718bb8b55a3c579fc87783d0d1e2f7aff0307efd66.png"></a>
-                            <a href="https://play.google.com/store/apps/details?id=com.cycllup"><img alt="cycllup Android App on Google Play" src="https://d3nn82uaxijpm6.cloudfront.net/assets/marketing/btn-google-play-1af0a2be816284e40414957321dc112dc8ed3e1f7de6d3d0b0dad8787ed58028.svg"></a>
-                        </div>
                     </div>
                 </div>
             </div>
