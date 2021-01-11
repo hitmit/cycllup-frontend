@@ -25,8 +25,9 @@ export default {
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
-    '@/assets/css/bootstrap.min.css',
-    '@/assets/css/custom.css'
+    '@/assets/css/argon.css',
+    '@/assets/css/akaunting-color.css',
+    '@/assets/css/custom.css',
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -76,15 +77,6 @@ export default {
    * Set ssr to false to see the loading indicator - https://nuxtjs.org/docs/2.x/features/rendering-modes
    */
   ssr: false,
-
-  /**
-   * modifying the loading indicator for spa  - https://nuxtjs.org/docs/2.x/features/loading
-   */
-  loadingIndicator: {
-    name: 'circle',
-    color: '#3B8070',
-    background: 'white'
-  },
 
   loading: '~/components/layout/Loading.vue'
 

@@ -25,10 +25,10 @@
                                 <i class="fa fa-user" aria-hidden="true"></i> {{currentUser.name}}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarUserDropdown">
-                                <nuxt-link class="dropdown-item" to="/athlete">
+                                <nuxt-link class="dropdown-item" :to="{ name: 'athlete-id', params: { id: currentUser.uid }}">
                                     <a>
-                                    <span class="upload-activity app-icon icon-upload-activity"></span>
-                                    My Profile
+                                        <span class="upload-activity app-icon icon-upload-activity"></span>
+                                        My Profile
                                     </a>
                                 </nuxt-link>
                                 <nuxt-link class="dropdown-item" to="/my-settings">

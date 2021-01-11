@@ -28,7 +28,7 @@
 import api from '@/helper/api';
 
 export default {
-    auth: false,
+    middleware: ['guest-user'],
     data() {
         return {
             user: {},

@@ -1,30 +1,36 @@
 <template>
     <div class="row">
-        <div class="col-md-3" id="dashboard-athlete-sidebar">
-            <div class="card mb-3" id="athlete-profile">
-                <div class="card-body text-center">
-                    <h3 class="mt-sm mb-md">
-                        <div class="athlete-name">{{ currentUser.name }}</div>
-                    </h3>
-                    <ul class="list-stats text-center">
-                        <li>
-                            <a class="stat" href="/athletes/73696971/follows?type=following">
-                                <div class="stat-subtext">Following</div>
-                                <b class="stat-text">{{followingCount}}</b>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="stat" href="/athletes/73696971/follows?type=followers">
-                                <div class="stat-subtext">Followers</div>
-                                <b class="stat-text">{{followersCount}}</b>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="stat" href="/athlete/training"><div class="stat-subtext">Activities</div>
-                                <b class="stat-text">0</b>
-                            </a>
-                        </li>
-                    </ul>
+        <div class="col-md-3" id="">
+            <div class="card mb-3 card-profile" id="athlete-profile">
+                <div class="row justify-content-center">
+                    <div class="card-profile-image">
+                        <img src="~/assets/img/user.png" class="rounded-circle">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mt-5">
+                        <div class="col text-center">
+                            {{currentUser.name}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card-profile-stats d-flex justify-content-center">
+                                <div>
+                                    <span class="heading">{{followingCount}}</span>
+                                    <span class="description">Following</span>
+                                </div>
+                                <div>
+                                    <span class="heading">{{followersCount}}</span>
+                                    <span class="description">Followers</span>
+                                </div>
+                                <div>
+                                    <span class="heading">0</span>
+                                    <span class="description">Activities</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card">
@@ -122,13 +128,15 @@ export default {
             var user = localStorage.getItem('currentUser');
             return JSON.parse(user);
         },
-        ...mapGetters({
-            followersCount: 'user/followersCount',
-            followingCount: 'user/followingCount',
-        }),
+        // ...mapGetters({
+        //     followersCount: 'user/followersCount',
+        //     followingCount: 'user/followingCount',
+        // }),
     },
     data() {
         return {
+            followersCount: 0,
+            followingCount: 0
         }
     },
     methods: {
@@ -139,7 +147,6 @@ export default {
         let user = this.currentUser;
         this.$store.dispatch('user/getFollowers', user.uid);
         this.$store.dispatch('user/getFollowing', user.uid);
-        
     }
 }
 </script>

@@ -7,11 +7,9 @@ export const state = () => ({
 
 export const getters = {
     followers: (state) => {
-        console.log(state.followers)
         return state.followers
     },
     following: (state) => {
-        console.log(state.following)
         return state.following
     },
     followersCount: (state) => {

@@ -26,6 +26,7 @@
 
 <script>
 export default {
+    middleware: ['guest-user'],
     data() {
         return {
             loading: false,
