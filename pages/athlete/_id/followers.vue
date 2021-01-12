@@ -2,15 +2,7 @@
     <div>
         <div class="row">
             <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="text-center">
-                            <img src="~/assets/img/user.png" class="rounded-circle" height="150" width="150">
-                            <h3>{{ currentUser.name }}</h3>
-                            <p><i class="fa fa-map-marker" aria-hidden="true"></i> Clermont Ferrand, Auvergne, France</p>
-                        </div>
-                    </div>
-                </div>
+                <Profile />
             </div>
             <div class="col-md-9">
                 <div class="card">
@@ -34,8 +26,8 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <div class="card">
-                    <ul class="nav nav-tabs m-2" id="myTab2" role="tablist">
+                <div class="nav-wrapper">
+                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="myTab2" role="tablist">
                         <li class="nav-item">
                             <nuxt-link :to="{ name: 'athlete-id', params: { id: userId }}" class="nav-link">
                                 <a>Overview</a>
@@ -67,53 +59,39 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                            <div class="card-body">
-                                {{followers}}
-                            </div>
-                        </div>
+                </div>
+                <div class="card shadow">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(follower, key) in followers" :key="follower.uid">
+                                    <td>{{key+1}}</td>
+                                    <td>
+                                        <nuxt-link :to="{ name: 'athlete-id', params: { id: follower.uid }}" >
+                                            {{follower.name}}
+                                        </nuxt-link>
+                                    </td>
+                                    <td>Follow/Unfollow</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card mb-3 card-profile">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col text-center">
-                                {{currentUser.name}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-profile-stats d-flex justify-content-center">
-                                    <div>
-                                        <span class="heading">{{followingCount}}</span>
-                                        <span class="description">Following</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">{{followersCount}}</span>
-                                        <span class="description">Followers</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading">0</span>
-                                        <span class="description">Activities</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <SocialStats :following="followingCount" :followers="followersCount" :activities="0" />
             
-                <div class="card mb-3">
-                    <div class="card-header">
-                        Clubs
-                    </div>
-                    <div class="card-body">
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <ul class="nav nav-tabs m-2" id="myTab" role="tablist">
+                <Clubs />
+
+                <div class="nav-wrapper">
+                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="myTab2" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
                                 <i class="fa fa-paw" aria-hidden="true"></i>
@@ -130,16 +108,10 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="tab-content m-3" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <p>comming soon</p>
-                        </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            comming soon
-                        </div>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                            comming soon
-                        </div>
+                </div>
+                <div class="card shadow">
+                    <div class="card-body">
+                        comming soon
                     </div>
                 </div>
             </div>
@@ -149,10 +121,17 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Profile from '@/components/athlete/Profile';
+import SocialStats from '@/components/athlete/SocialStats';
+import Clubs from '@/components/athlete/Clubs';
 
 export default {
     middleware: ['auth'],
-    name: 'AthleteIndex',
+    components: {
+        Profile,
+        SocialStats,
+        Clubs
+    },
     data() {
         return {
             userId: ''

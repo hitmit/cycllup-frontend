@@ -9,7 +9,7 @@
     margin-top: 20px;
 }
 .card-profile-stats {
-    padding: none;
+    padding: unset;
 }
 
 .card-profile-stats>div {

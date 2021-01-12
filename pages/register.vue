@@ -45,7 +45,7 @@ export default {
                 "mail": [this.user.email]
             }
             // this.notifyResponse('test');
-            api.createResource('POST', '/user/register?_format=json', data)
+            api.createResource('POST', '/user/register', data)
             .then(response => {
                 vm.notifyResponse('User Created Sucessfully.');
                 vm.$router.push('/login');

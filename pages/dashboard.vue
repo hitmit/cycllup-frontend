@@ -1,17 +1,16 @@
 <template>
     <div class="row">
         <div class="col-md-3" id="">
-            <div class="card mb-3 card-profile" id="athlete-profile">
+            <div class="card mb-3 card-profile">
+                <img src="~/assets/img/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
                 <div class="row justify-content-center">
                     <div class="card-profile-image">
                         <img src="~/assets/img/user.png" class="rounded-circle">
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row mt-5">
-                        <div class="col text-center">
-                            {{currentUser.name}}
-                        </div>
+                    <div class="text-center mt-5">
+                        <h3>{{ currentUser.name }}</h3>
                     </div>
                     <div class="row">
                         <div class="col">
@@ -33,8 +32,8 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <ul class="nav nav-tabs m-2" id="myTab" role="tablist">
+            <div class="nav-wrapper">
+                <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="myTab2" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
                             <i class="fa fa-paw" aria-hidden="true"></i>
@@ -51,16 +50,10 @@
                         </a>
                     </li>
                 </ul>
-                <div class="tab-content m-3" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <p>comming soon</p>
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        comming soon
-                    </div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                        comming soon
-                    </div>
+            </div>
+            <div class="card shadow">
+                <div class="card-body">
+                    comming soon
                 </div>
             </div>
         </div>

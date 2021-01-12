@@ -29,6 +29,7 @@ export const mutations = {
     logoutSuccess(state) {
         localStorage.removeItem('user');
         localStorage.removeItem('logout_token');
+        localStorage.removeItem('currentUser');
         localStorage.removeItem('csrf_token');
     },
     setFollowers(state, followers) {

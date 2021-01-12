@@ -65,7 +65,7 @@ export default {
           logout: false,
           user: false,
         },
-        // tokenRequired: true,
+        tokenRequired: true,
         tokenType: '',
         // globalToken: true,
         // autoFetchUser: true

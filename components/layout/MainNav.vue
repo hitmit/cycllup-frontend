@@ -31,7 +31,7 @@
                                         My Profile
                                     </a>
                                 </nuxt-link>
-                                <nuxt-link class="dropdown-item" to="/my-settings">
+                                <nuxt-link class="dropdown-item" to="/settings/profile">
                                     <a>
                                     <span class="upload-activity-manual app-icon icon-upload-activity-manual"></span>
                                     Settings
@@ -70,7 +70,7 @@
                             </div>
                         </li>
                     </template>
-                    <template v-else>
+                    <template v-if="$auth.loggedIn == false">
                         <li class="nav-item">
                             <nuxt-link class="nav-link" to="/login"><a>Login</a></nuxt-link>
                         </li>

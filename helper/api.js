@@ -10,15 +10,16 @@ export default {
     async execute (method, resource, data) {
         return new Promise((resolve, reject) => {
             // inject the accessToken for each request
-            let accessToken = localStorage.getItem('auth._token.local');
+            let accessToken = localStorage.getItem('csrf_token');
+            // let accessToken = 'xNfOjjdou42JF6H313GSb2ABkSJj5N1UD6e3RGG9OXA';
             client({
                 method,
                 url: resource,
                 data,
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-Token": `${accessToken}`,
-                    "withCredentials": true
+                    "X-CSRF-Token":accessToken,
+                    "cache-control": "no-cach"
                 }
             }).then(response => {
                 resolve(response.data) 
@@ -34,12 +35,12 @@ export default {
     getResource (method, url, id) {
         return this.execute(method, url + '/' + id)
     },
-    createResource (method, url, data) {
+    createResource (method, url, data, format='json') {
         console.log('dddd');
-        return this.execute(method, url, data)
+        return this.execute(method, url + '?_format=' + format, data)
     },
-    updateResource (method, url, id, data) {
-        return this.execute(method, url + '/' + id, data)
+    updateResource (method, url, id, data, format='json') {
+        return this.execute(method, url + '/' + id + '?_format=' + format, data)
     },
     deleteResource (method, url, id) {
         return this.execute(method, url + '/' + id)
