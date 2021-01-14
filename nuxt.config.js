@@ -45,32 +45,11 @@ export default {
   modules: [
     'nuxt-sweetalert2',
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
     'nuxt-cookie-control'
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  },
-
-  axios: {
-    baseURL: 'https://dev-cycllup.pantheonsite.io',
-  },
-
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/user/login?_format=json', method: 'post', propertyName: 'csrf_token' },
-          logout: false,
-          user: false,
-        },
-        tokenRequired: true,
-        tokenType: '',
-        // globalToken: true,
-        // autoFetchUser: true
-      }
-    }
   },
 
   /**

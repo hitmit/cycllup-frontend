@@ -9,7 +9,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-                    <template v-if="$auth.loggedIn">
+                    <template v-if="loggedIn">
                         <li class="nav-item">
                             <nuxt-link class="nav-link" to="/dashboard"><a>Dashboard</a></nuxt-link>
                         </li>
@@ -19,7 +19,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul  class="navbar-nav ml-auto nav-group">
                     <!-- Authentication Links -->
-                    <template v-if="$auth.loggedIn">
+                    <template v-if="loggedIn">
                         <li class="nav-item dropdown drop-down-menu">
                             <a class="nav-link dropdown-toggle selection" href="#" id="navbarUserDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user" aria-hidden="true"></i> {{currentUser.name}}
@@ -70,7 +70,7 @@
                             </div>
                         </li>
                     </template>
-                    <template v-if="$auth.loggedIn == false">
+                    <template v-if="loggedIn == false">
                         <li class="nav-item">
                             <nuxt-link class="nav-link" to="/login"><a>Login</a></nuxt-link>
                         </li>
@@ -88,9 +88,11 @@ import api from '@/helper/api';
 
 export default {
     computed: {
+        loggedIn() {
+            return this.$store.state.auth.loggedIn;
+        },
         currentUser() {
-            var user = localStorage.getItem('currentUser');
-            return JSON.parse(user);
+            return this.$store.state.auth.user;
         }
     },
     methods: {
@@ -107,14 +109,13 @@ export default {
                 let vm = this;
                 vm.$nuxt.$loading.start()
 
-                let logout_token = localStorage.getItem('logout_token');
+                // let logout_token = localStorage.getItem('logout_token');
 
                 // var response  = await api.createResource('POST', '/user/logout?_format=json&token=' + logout_token);
-                vm.$auth.logout();
+                // vm.$auth.logout();
+                this.$store.commit('auth/logoutSuccess')
                 vm.$router.push('/');
-                this.$store.commit('user/logoutSuccess')
                 vm.$nuxt.$loading.finish()
-
 
             } catch (err) {
                 console.log(err)

@@ -32,15 +32,15 @@
                     <div v-if="edit == false">
                         <div class="form-group row" >
                             <label class="col-md-4 text-right">Name</label>
-                            <div class="col-md-8">Hitesh Mittal</div>
+                            <div class="col-md-8">{{ user.first_name }} {{ user.last_name }}</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 text-right">Bithday</label>
-                            <div class="col-md-8">Hitesh Mittal</div>
+                            <div class="col-md-8">{{ user.birthday }}</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 text-right">Gender</label>
-                            <div class="col-md-8">Hitesh Mittal</div>
+                            <div class="col-md-8">{{ user.gender }}</div>
                         </div>
                     </div>
                     <div v-if="edit == true">
@@ -83,7 +83,7 @@
 import api from '@/helper/api';
 
 export default {
-    middleware: ['auth'],
+    middleware: ['auth-user'],
     data() {
         return {
             edit: false,
@@ -98,8 +98,7 @@ export default {
     },
     computed: {
         currentUser() {
-            var user = localStorage.getItem('currentUser');
-            return JSON.parse(user);
+            return this.$store.state.auth.user;
         }
     },
     methods: {
@@ -124,15 +123,15 @@ export default {
                 "field_first_name": [
                     {"value": this.user.first_name}
                 ],
-                // "field_last_name": [
-                //     {"value": this.user.last_name}
-                // ],
-                // "field_gender": [
-                //     {"value": this.user.gender}
-                // ],
-                // "field_birthday": [
-                //     {"value": this.user.birthday}
-                // ],
+                "field_last_name": [
+                    {"value": this.user.last_name}
+                ],
+                "field_gender": [
+                    {"value": this.user.gender}
+                ],
+                "field_birthday": [
+                    {"value": this.user.birthday}
+                ],
             }
             let user = this.currentUser;
             api.updateResource('PATCH', '/user', user.uid, data).then(response => {
@@ -140,9 +139,9 @@ export default {
                 vm.$nuxt.$loading.finish();
                 vm.user = {
                     first_name: response.field_first_name[0].value,
-                    // last_name: response.field_last_name[0].value,
-                    // gender: response.field_gender[0].value,
-                    // birthday: response.field_birthday[0].value,
+                    last_name: response.field_last_name[0].value,
+                    gender: response.field_gender[0].value,
+                    birthday: response.field_birthday[0].value,
                 };
                 vm.edit = false;
             }).catch(error => {

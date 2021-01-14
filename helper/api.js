@@ -1,33 +1,41 @@
 import axios from 'axios'
 
+const siteURL = 'http://cycllup.ddev.site:8080'
+
 const client = axios.create({
-    baseURL: 'https://dev-cycllup.pantheonsite.io',
+    baseURL: siteURL,
     json: true
 });
-
 export default {
-
-    async execute (method, resource, data) {
+    async execute(method, resource, data) {
         return new Promise((resolve, reject) => {
-            // inject the accessToken for each request
-            let accessToken = localStorage.getItem('csrf_token');
-            // let accessToken = 'xNfOjjdou42JF6H313GSb2ABkSJj5N1UD6e3RGG9OXA';
-            client({
-                method,
-                url: resource,
-                data,
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-Token":accessToken,
-                    "cache-control": "no-cach"
-                }
+            let tokenUrl =  siteURL + '/rest/session/token';
+            axios.get(tokenUrl, {
+                withCredentials: true
             }).then(response => {
-                resolve(response.data) 
+                var user_token = localStorage.getItem('user_token');
+                client({
+                    method,
+                    url: resource,
+                    data,
+                    withCredentials: true,
+                    headers: {
+                        'X-CSRF-Token': response.data,
+                        'Authorization': 'Basic '+ user_token
+                    },
+                    params: { _format: 'json' }
+                }).then(response => {
+                    resolve(response.data) 
+                })
+                .catch(error => {
+                    reject(error.response)
+                });
             })
             .catch(error => {
                 reject(error.response)
-            });    
+            });
         })
+
     },
     getResources (method, url, data) {
         return this.execute(method, url, data)
@@ -35,17 +43,36 @@ export default {
     getResource (method, url, id) {
         return this.execute(method, url + '/' + id)
     },
-    createResource (method, url, data, format='json') {
+    createResource (method, url, data) {
         console.log('dddd');
-        return this.execute(method, url + '?_format=' + format, data)
+        return this.execute(method, url, data)
     },
-    updateResource (method, url, id, data, format='json') {
-        return this.execute(method, url + '/' + id + '?_format=' + format, data)
+    updateResource (method, url, id, data) {
+        return this.execute(method, url + '/' + id, data)
     },
     deleteResource (method, url, id) {
         return this.execute(method, url + '/' + id)
     },
     deleteResources (method, url, data) {
         return this.execute(method, url, data)
+    },
+    login(method, url, data) {
+        return new Promise((resolve, reject) => {
+            client({
+                method,
+                url: url,
+                data,
+                headers: {
+                    "content-type": "application/json",
+                    "cache-control": "no-cach"
+                },
+                params: { _format: 'json' }
+            }).then(response => {
+                resolve(response.data) 
+            })
+            .catch(error => {
+                reject(error.response)
+            });    
+        })
     },
 }

@@ -43,15 +43,13 @@ export default {
             let vm = this;
             vm.$nuxt.$loading.start()
             // this.loading = true;
-            this.$auth.loginWith('local', { data: this.user }).then(function (response) {
+            this.$store.dispatch('auth/login', this.user).then(function (response) {
                 vm.$nuxt.$loading.finish()
-                vm.$store.commit('user/loginSuccess', response.data)
-                localStorage.setItem('currentUser', JSON.stringify(response.data.current_user))
+                // vm.$store.commit('auth/loginSuccess', response.data)
                 vm.$router.push('/dashboard');
             }).catch(function (error) {
                 vm.$nuxt.$loading.finish()
             });
-            
         },
     },
     mounted () {

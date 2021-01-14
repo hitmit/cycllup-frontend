@@ -111,21 +111,18 @@
 import { mapGetters } from "vuex";
 
 export default {
-    middleware: ['auth'],
+    middleware: ['auth-user'],
     computed: {
         currentUser() {
-            var user = localStorage.getItem('currentUser');
-            return JSON.parse(user);
+            return this.$store.state.auth.user;
         },
-        // ...mapGetters({
-        //     followersCount: 'user/followersCount',
-        //     followingCount: 'user/followingCount',
-        // }),
+        ...mapGetters({
+            followersCount: 'user/followersCount',
+            followingCount: 'user/followingCount',
+        }),
     },
     data() {
         return {
-            followersCount: 0,
-            followingCount: 0
         }
     },
     methods: {
