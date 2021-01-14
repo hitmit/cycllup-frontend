@@ -107,7 +107,7 @@ import SocialStats from '@/components/athlete/SocialStats';
 import Clubs from '@/components/athlete/Clubs';
 
 export default {
-    middleware: ['auth'],
+    middleware: ['auth-user'],
     components: {
         Profile,
         SocialStats,

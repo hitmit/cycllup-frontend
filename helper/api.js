@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const siteURL = 'http://cycllup.ddev.site:8080'
+const siteURL = 'https://dev-cycllup.pantheonsite.io'
 
 const client = axios.create({
     baseURL: siteURL,
