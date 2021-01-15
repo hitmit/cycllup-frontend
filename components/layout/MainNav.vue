@@ -13,6 +13,9 @@
                         <li class="nav-item">
                             <nuxt-link class="nav-link" to="/dashboard"><a>Dashboard</a></nuxt-link>
                         </li>
+                        <li class="nav-item">
+                            <nuxt-link class="nav-link" to="/users"><a>Users</a></nuxt-link>
+                        </li>
                     </template>
                 </ul>
 

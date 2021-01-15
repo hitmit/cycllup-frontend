@@ -1,4 +1,4 @@
-import api from '@/helper/api'
+import api from '@/helper/guestapi'
 import { getLocalUser } from "@/helper/auth";
 import axios from 'axios'
 
@@ -38,6 +38,18 @@ export const actions = {
     login (context, data) {
         return new Promise((resolve, reject) => {
             api.login('post', '/user/login', data)
+            .then(function (response) {
+                context.commit('loginSuccess', {response: response, data: data});
+                resolve(response)
+            }).catch(function (error) {
+                reject(error)
+            })
+        })
+    },
+
+    register (context, data) {
+        return new Promise((resolve, reject) => {
+            api.register('post', '/user/register', data)
             .then(function (response) {
                 context.commit('loginSuccess', {response: response, data: data});
                 resolve(response)

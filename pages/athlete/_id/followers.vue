@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="nav-wrapper">
                     <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="myTab2" role="tablist">
                         <li class="nav-item">
@@ -58,6 +58,11 @@
                             Local Legends
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <nuxt-link :to="{ name: 'athlete-id-posts', params: { id: userId }}" class="nav-link">
+                                <a>Posts</a>
+                            </nuxt-link>
+                        </li>
                     </ul>
                 </div>
                 <div class="card shadow">
@@ -78,14 +83,24 @@
                                             {{follower.name}}
                                         </nuxt-link>
                                     </td>
-                                    <td>Follow/Unfollow</td>
+                                    <td >
+                                        <template v-if="checkFollowing(follower)">
+                                            <span> Already Following</span>
+                                        </template>
+                                        <template v-else>
+                                            Follow Back
+                                        </template>
+                                    </td>
+                                </tr>
+                                <tr v-if="!followers.length">
+                                    <td colspan="3">No Followers found!!</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <SocialStats :following="followingCount" :followers="followersCount" :activities="0" />
             
                 <Clubs />
@@ -116,11 +131,31 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="follow-back" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h4 class="modal-title" id="myModalLabel">Follow Back</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    </div>
+                    <div class="modal-body" v-if="followUser.name">
+                        Are you sure you wanna follow {{ followUser.name }} ?
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-success btn-sm" @click.prevent="followBack">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import api from '@/helper/api';
 import Profile from '@/components/athlete/Profile';
 import SocialStats from '@/components/athlete/SocialStats';
 import Clubs from '@/components/athlete/Clubs';
@@ -134,19 +169,83 @@ export default {
     },
     data() {
         return {
-            userId: ''
+            userId: '',
+            followUser: {}
         }
     },
     computed: {
         currentUser() {
-            var user = localStorage.getItem('currentUser');
-            return JSON.parse(user);
+            return this.$store.state.auth.user;
         },
         ...mapGetters({
             followersCount: 'user/followersCount',
             followingCount: 'user/followingCount',
-            followers: 'user/followers'
+            followers: 'user/followers',
+            following: 'user/following',
         }),
+    },
+    methods: {
+        confirmFollowBack(item) {
+            this.followUser = item;
+            $("#follow-back").modal('show');
+        },
+        followBack() {
+            // this.followUser = item;
+            let vm = this;
+            vm.$nuxt.$loading.start();
+            let user = this.currentUser;
+            var data = {
+                "flag_id": [
+                    {"target_id": "following"}
+                ],
+                "entity_type": [
+                    {"value": "user"}
+                ],
+                "global": [
+                    {
+                        "value": false
+                    }
+                ],
+                "entity_id": [
+                    {"value": this.followUser.uid}
+                ],
+                "uid": [{"target_id": user.uid}]
+            }
+            api.createResource('POST', '/entity/flagging', data).then(response => {
+                vm.notifyResponse('You have started following: ' + vm.followUser.name);
+                vm.$nuxt.$loading.finish();
+                vm.followUser = {};
+                vm.$store.dispatch('user/getFollowers', vm.user.uid);
+                vm.$store.dispatch('user/getFollowing', vm.user.uid);
+                $("#follow-back").modal('hide');
+            }).catch(error => {
+                vm.$nuxt.$loading.finish();
+                vm.notifyResponse('Something went wrong, Please try again!!', 'error');
+                $("#follow-back").modal('hide');
+                // this.errors.record(error.data.errors);
+            });
+        },
+        checkFollowing(follower) {
+            let following = this.following;
+            let alreadyFollowing = false
+
+            following.forEach(element => {
+
+                if (element.uid === follower.uid) {
+                    alreadyFollowing = true;
+                }
+            });
+
+            return alreadyFollowing;
+        },
+        notifyResponse(message, type='success', container='floating', timer=3000) { 
+            this.$swal({
+                type: type,
+                title: message,
+                showConfirmButton: false,
+                timer: timer
+            });
+        }
     },
     mounted() {
         let uid = this.$route.params.id;

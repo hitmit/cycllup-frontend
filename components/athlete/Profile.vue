@@ -19,8 +19,7 @@
 export default {
     computed: {
         currentUser() {
-            var user = localStorage.getItem('currentUser');
-            return JSON.parse(user);
+            return this.$store.state.auth.user;
         }
     }
 }

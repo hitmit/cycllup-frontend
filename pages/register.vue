@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import api from '@/helper/api';
+import api from '@/helper/guestapi';
 
 export default {
     middleware: ['guest-user'],
@@ -40,17 +40,19 @@ export default {
             let vm = this;
             vm.$nuxt.$loading.start();
             var data = {
-                "name": [this.user.email],
-                "pass": [this.user.password],
-                "mail": [this.user.email]
+                "name": [{"value": this.user.email}],
+                "pass": [{"value": this.user.password}],
+                "mail": [{"value": this.user.email}],
+                "roles": [{"target_id": "cyclist"}]
             }
             // this.notifyResponse('test');
-            api.createResource('POST', '/user/register', data)
+            api.register('POST', '/cycllup/user/register', data)
             .then(response => {
-                vm.notifyResponse('User Created Sucessfully.');
-                vm.$router.push('/login');
+                console.log(response);
+                // vm.notifyResponse('User Created Sucessfully.');
+                // vm.$router.push('/login');
                 vm.$nuxt.$loading.finish();
-                vm.user = {};
+                // vm.user = {};
             })
             .catch(error => {
                 vm.$nuxt.$loading.finish();

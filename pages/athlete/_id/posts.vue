@@ -38,8 +38,8 @@
                                 Trophy Case
                             </a>
                         </li>
-                        <li class="nav-item active">
-                            <nuxt-link :to="{ name: 'athlete-id-following', params: { id: userId }}" class="nav-link active">
+                        <li class="nav-item">
+                            <nuxt-link :to="{ name: 'athlete-id-following', params: { id: userId }}" class="nav-link">
                                 <a>Following</a>
                             </nuxt-link>
                         </li>
@@ -58,45 +58,35 @@
                             Local Legends
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <nuxt-link :to="{ name: 'athlete-id-posts', params: { id: userId }}" class="nav-link">
+                        <li class="nav-item active">
+                            <nuxt-link :to="{ name: 'athlete-id-posts', params: { id: userId }}" class="nav-link active">
                                 <a>Posts</a>
                             </nuxt-link>
                         </li>
                     </ul>
                 </div>
-                <div class="card">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(follow, key) in following" :key="follow.id">
-                                    <td>{{key+1}}</td>
-                                    <td>
-                                        <nuxt-link :to="{ name: 'athlete-id', params: { id: follow.uid }}" >
-                                            {{follow.name}}
-                                        </nuxt-link>
-                                    </td>
-                                    <td>Unfollow</td>
-                                </tr>
-
-                                <tr v-if="!following.length">
-                                    <td colspan="3">No following found!!</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <p v-if="!posts.length">
+                            No Posts found!!
+                        </p>
+                        <div v-else>
+                            <div  class="post-body spans11" v-for="post in posts" :key="post.nid">
+                                <h4 class="post-title topless">
+                                    <a class="str-click-self-js" href="#" :title="post.title" >
+                                        <strong>{{post.title}}</strong>
+                                    </a>
+                                </h4>
+                                <div v-text="post.body"></div>
+                                <hr/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <SocialStats :following="followingCount" :followers="followersCount" :activities="0" />
-
+            
                 <Clubs />
 
                 <div class="nav-wrapper">
@@ -143,7 +133,8 @@ export default {
     },
     data() {
         return {
-            userId: ''
+            userId: '',
+            posts: []
         }
     },
     computed: {
@@ -153,14 +144,18 @@ export default {
         ...mapGetters({
             followersCount: 'user/followersCount',
             followingCount: 'user/followingCount',
-            following: 'user/following'
+            followers: 'user/followers'
         }),
     },
     mounted() {
         let uid = this.$route.params.id;
+        let vm = this;
         this.userId = uid;
         this.$store.dispatch('user/getFollowers', uid);
         this.$store.dispatch('user/getFollowing', uid);
+        this.$store.dispatch('user/getPosts', uid).then(function (response) {
+            vm.posts = response;
+        });
     }
 }
 </script>

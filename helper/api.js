@@ -1,6 +1,7 @@
 import axios from 'axios'
+import config from './config';
 
-const siteURL = 'https://dev-cycllup.pantheonsite.io'
+const siteURL = config.drupal_url;
 
 const client = axios.create({
     baseURL: siteURL,
@@ -21,6 +22,7 @@ export default {
                     withCredentials: true,
                     headers: {
                         'X-CSRF-Token': response.data,
+                        'Content-Type': 'application/json',
                         'Authorization': 'Basic '+ user_token
                     },
                     params: { _format: 'json' }
@@ -35,7 +37,6 @@ export default {
                 reject(error.response)
             });
         })
-
     },
     getResources (method, url, data) {
         return this.execute(method, url, data)
@@ -55,24 +56,5 @@ export default {
     },
     deleteResources (method, url, data) {
         return this.execute(method, url, data)
-    },
-    login(method, url, data) {
-        return new Promise((resolve, reject) => {
-            client({
-                method,
-                url: url,
-                data,
-                headers: {
-                    "content-type": "application/json",
-                    "cache-control": "no-cach"
-                },
-                params: { _format: 'json' }
-            }).then(response => {
-                resolve(response.data) 
-            })
-            .catch(error => {
-                reject(error.response)
-            });    
-        })
-    },
+    }
 }

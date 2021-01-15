@@ -32,15 +32,15 @@
                     <div v-if="edit == false">
                         <div class="form-group row" >
                             <label class="col-md-4 text-right">Name</label>
-                            <div class="col-md-8">{{ user.first_name }} {{ user.last_name }}</div>
+                            <div class="col-md-8">{{ profile.first_name }} {{ profile.last_name }}</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 text-right">Bithday</label>
-                            <div class="col-md-8">{{ user.birthday }}</div>
+                            <div class="col-md-8">{{ profile.birthday }}</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 text-right">Gender</label>
-                            <div class="col-md-8">{{ user.gender }}</div>
+                            <div class="col-md-8">{{ profile.gender }}</div>
                         </div>
                     </div>
                     <div v-if="edit == true">
@@ -81,6 +81,8 @@
 
 <script>
 import api from '@/helper/api';
+import { mapGetters } from "vuex";
+
 
 export default {
     middleware: ['auth-user'],
@@ -99,7 +101,10 @@ export default {
     computed: {
         currentUser() {
             return this.$store.state.auth.user;
-        }
+        },
+        ...mapGetters({
+            profile: 'user/profile',
+        }),
     },
     methods: {
         commmingSoon() {
@@ -137,17 +142,12 @@ export default {
             api.updateResource('PATCH', '/user', user.uid, data).then(response => {
                 vm.notifyResponse('User Updated Sucessfully.');
                 vm.$nuxt.$loading.finish();
-                vm.user = {
-                    first_name: response.field_first_name[0].value,
-                    last_name: response.field_last_name[0].value,
-                    gender: response.field_gender[0].value,
-                    birthday: response.field_birthday[0].value,
-                };
+                vm.$store.commit('user/setProfile', response);
                 vm.edit = false;
             }).catch(error => {
                 vm.$nuxt.$loading.finish();
                 vm.notifyResponse('Something went wrong, Please try again!!', 'error');
-                // vm.edit = false;
+                vm.edit = false;
                 // this.errors.record(error.data.errors);
             });
         },
@@ -159,6 +159,11 @@ export default {
                 timer: timer
             });
         }
+    },
+    mounted() {
+        let vm = this;
+        let user = this.currentUser;
+        this.$store.dispatch('user/getProfile', user.uid);
     }
 }
 </script>

@@ -133,6 +133,7 @@ export default {
         let user = this.currentUser;
         this.$store.dispatch('user/getFollowers', user.uid);
         this.$store.dispatch('user/getFollowing', user.uid);
+        this.$store.dispatch('user/getProfile', user.uid);
     }
 }
 </script>

@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="nav-wrapper">
                     <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="myTab2" role="tablist">
                         <li class="nav-item active">
@@ -58,6 +58,11 @@
                             Local Legends
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <nuxt-link :to="{ name: 'athlete-id-posts', params: { id: userId }}" class="nav-link">
+                                <a>Posts</a>
+                            </nuxt-link>
+                        </li>
                     </ul>
                 </div>
                 <div class="card shadow">
@@ -66,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <SocialStats :following="followingCount" :followers="followersCount" :activities="0" />
             
                 <Clubs />
@@ -120,8 +125,7 @@ export default {
     },
     computed: {
         currentUser() {
-            var user = localStorage.getItem('currentUser');
-            return JSON.parse(user);
+            return this.$store.state.auth.user;
         },
         ...mapGetters({
             followersCount: 'user/followersCount',
