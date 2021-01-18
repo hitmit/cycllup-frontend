@@ -77,7 +77,7 @@
                                         <strong>{{post.title}}</strong>
                                     </a>
                                 </h4>
-                                <div v-text="post.body"></div>
+                                <div v-html="post.body"></div>
                                 <hr/>
                             </div>
                         </div>

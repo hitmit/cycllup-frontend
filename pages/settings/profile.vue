@@ -89,12 +89,7 @@ export default {
     data() {
         return {
             edit: false,
-            user: {
-                first_name: '',
-                last_name: '',
-                gender: '',
-                birthday: ''
-            },
+            user: {},
             loading: false,
         }
     },
@@ -163,7 +158,20 @@ export default {
     mounted() {
         let vm = this;
         let user = this.currentUser;
-        this.$store.dispatch('user/getProfile', user.uid);
+        this.$store.dispatch('user/getProfile', user.uid).then(function(res) {
+            if (res.field_first_name.length) {
+                vm.user.first_name = res.field_first_name[0].value; 
+            }
+            if (res.field_last_name.length) {
+                vm.user.last_name = res.field_last_name[0].value; 
+            }
+            if (res.field_gender.length) {
+                vm.user.gender = res.field_gender[0].value; 
+            }
+            if (res.field_birthday.length) {
+                vm.user.birthday = res.field_birthday[0].value; 
+            }
+        });
     }
 }
 </script>

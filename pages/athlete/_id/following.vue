@@ -83,7 +83,9 @@
                                             {{follow.name}}
                                         </nuxt-link>
                                     </td>
-                                    <td>Unfollow</td>
+                                    <td>
+                                        <a href="#" @click.prevent="confirmUnfollow(follow.id)" >UnFollow </a>
+                                    </td>
                                 </tr>
 
                                 <tr v-if="!following.length">
@@ -125,11 +127,32 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="unfollow-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h4 class="modal-title" id="myModalLabel">Unfollow</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you wanna unfollow this user ?
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-success btn-sm" @click.prevent="unfollow">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import api from '@/helper/api';
+
 import Profile from '@/components/athlete/Profile';
 import SocialStats from '@/components/athlete/SocialStats';
 import Clubs from '@/components/athlete/Clubs';
@@ -143,7 +166,8 @@ export default {
     },
     data() {
         return {
-            userId: ''
+            userId: '',
+            flag_id: 0
         }
     },
     computed: {
@@ -155,6 +179,38 @@ export default {
             followingCount: 'user/followingCount',
             following: 'user/following'
         }),
+    },
+    methods: {
+        confirmUnfollow(item) {
+            this.flag_id = item;
+            $("#unfollow-user").modal('show');
+        },
+        unfollow() {
+            let vm = this;
+            vm.$nuxt.$loading.start();
+            let user = this.currentUser;
+            api.deleteResource('DELETE', '/entity/flagging', + vm.flag_id).then(response => {
+                let user = vm.currentUser;
+                vm.notifyResponse('You have unfollowed this user');
+                vm.$nuxt.$loading.finish();
+                vm.$store.dispatch('user/getFollowers', user.uid);
+                vm.$store.dispatch('user/getFollowing', user.uid);
+                $("#unfollow-user").modal('hide');
+            }).catch(error => {
+                vm.$nuxt.$loading.finish();
+                vm.notifyResponse('Something went wrong, Please try again!!', 'error');
+                $("#unfollow-user").modal('hide');
+                // this.errors.record(error.data.errors);
+            });
+        },
+        notifyResponse(message, type='success', container='floating', timer=3000) { 
+            this.$swal({
+                type: type,
+                title: message,
+                showConfirmButton: false,
+                timer: timer
+            });
+        }
     },
     mounted() {
         let uid = this.$route.params.id;

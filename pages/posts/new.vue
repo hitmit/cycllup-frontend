@@ -64,7 +64,7 @@ export default {
                 "body": [
                     {"value": this.post.body, "format": "basic_html"}
                 ],
-                "uid": [{"target_id": user.uid}]
+                // "uid": [{"target_id": user.uid}]
             }
             
             api.createResource('POST', '/node', data).then(response => {

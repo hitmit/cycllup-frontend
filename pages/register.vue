@@ -48,11 +48,10 @@ export default {
             // this.notifyResponse('test');
             api.register('POST', '/cycllup/user/register', data)
             .then(response => {
-                console.log(response);
-                // vm.notifyResponse('User Created Sucessfully.');
-                // vm.$router.push('/login');
+                vm.notifyResponse('User Created Sucessfully.');
+                vm.$router.push('/login');
                 vm.$nuxt.$loading.finish();
-                // vm.user = {};
+                vm.user = {};
             })
             .catch(error => {
                 vm.$nuxt.$loading.finish();

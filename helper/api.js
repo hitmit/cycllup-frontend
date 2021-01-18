@@ -45,7 +45,6 @@ export default {
         return this.execute(method, url + '/' + id)
     },
     createResource (method, url, data) {
-        console.log('dddd');
         return this.execute(method, url, data)
     },
     updateResource (method, url, id, data) {

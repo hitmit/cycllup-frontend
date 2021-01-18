@@ -88,7 +88,7 @@
                                             <span> Already Following</span>
                                         </template>
                                         <template v-else>
-                                            Follow Back
+                                            <a href="#" @click.prevent="confirmFollow(follower.uid)" >Follow Back</a>
                                         </template>
                                     </td>
                                 </tr>
@@ -131,20 +131,20 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="follow-back" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="follow-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header" >
                         <h4 class="modal-title" id="myModalLabel">Follow Back</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
                     </div>
-                    <div class="modal-body" v-if="followUser.name">
-                        Are you sure you wanna follow {{ followUser.name }} ?
+                    <div class="modal-body" >
+                        Are you sure you wanna follow the user ?
                     </div>
                     <div class="modal-footer">
                         <div class="form-group">
                             <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No</button>
-                            <button type="button" class="btn btn-success btn-sm" @click.prevent="followBack">Yes</button>
+                            <button type="button" class="btn btn-success btn-sm" @click.prevent="follow">Yes</button>
                         </div>
                     </div>
                 </div>
@@ -185,12 +185,11 @@ export default {
         }),
     },
     methods: {
-        confirmFollowBack(item) {
-            this.followUser = item;
-            $("#follow-back").modal('show');
+        confirmFollow(item) {
+            this.followUser.uid = item;
+            $("#follow-user").modal('show');
         },
-        followBack() {
-            // this.followUser = item;
+        follow() {
             let vm = this;
             vm.$nuxt.$loading.start();
             let user = this.currentUser;
@@ -215,27 +214,29 @@ export default {
                 vm.notifyResponse('You have started following: ' + vm.followUser.name);
                 vm.$nuxt.$loading.finish();
                 vm.followUser = {};
-                vm.$store.dispatch('user/getFollowers', vm.user.uid);
-                vm.$store.dispatch('user/getFollowing', vm.user.uid);
-                $("#follow-back").modal('hide');
+                vm.$store.dispatch('user/getFollowers', response.uid[0].target_id);
+                vm.$store.dispatch('user/getFollowing', response.uid[0].target_id);
+                $("#follow-user").modal('hide');
             }).catch(error => {
                 vm.$nuxt.$loading.finish();
                 vm.notifyResponse('Something went wrong, Please try again!!', 'error');
-                $("#follow-back").modal('hide');
-                // this.errors.record(error.data.errors);
+                $("#follow-user").modal('hide');
             });
         },
         checkFollowing(follower) {
             let following = this.following;
             let alreadyFollowing = false
-
+            let vm = this;
+            let flag_id = 0
             following.forEach(element => {
-
                 if (element.uid === follower.uid) {
                     alreadyFollowing = true;
+                    flag_id = element.id;
                 }
             });
-
+            if (alreadyFollowing) {
+                return flag_id;
+            }
             return alreadyFollowing;
         },
         notifyResponse(message, type='success', container='floating', timer=3000) { 

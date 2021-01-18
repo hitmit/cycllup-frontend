@@ -13,6 +13,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr v-if="users.length == 0">
+                                <td colspan="3">No users found!!</td>
+                            </tr>
                             <tr v-for="(user, key) in users" :key="user.uid" >
                                 <template v-if="user.uid != currentUser.uid">
                                     <td >{{ key+1 }}</td>
@@ -185,7 +188,7 @@ export default {
     },
     mounted() {
         let vm = this;
-        // this.$nuxt.$loading.start();
+        this.$nuxt.$loading.start();
         api.getResources('GET', '/api/user/list').then(response => {
             vm.users = response;
             vm.$nuxt.$loading.finish();
