@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar nav-bar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#">Cycllup</a>
+            <a class="navbar-brand" @click.prevent="backToHome" href="#">Cycllup</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -106,6 +106,13 @@ export default {
                 showConfirmButton: false,
                 timer: 3000
             });
+        },
+        backToHome() {
+            if (this.loggedIn) {
+                this.$router.push('/dashboard');
+            } else {
+                this.$router.push('/');
+            }
         },
         async logout() {
             try {
