@@ -11,7 +11,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Send Password Reset Link</button>
+                        <button type="submit" class="btn btn-primary">Set Password</button>
                         <nuxt-link to="/login" class="btn btn-link">Login</nuxt-link>
                     </div>
                 </form>
