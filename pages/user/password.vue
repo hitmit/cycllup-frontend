@@ -2,21 +2,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Login</div>
-                <form class="form-horizontal" v-on:submit.prevent="login" method="POST">
+                <div class="card-header">Reset Password</div>
+                <form class="form-horizontal" v-on:submit.prevent="reset" method="POST">
                     <div class="card-body">
                         <div class="form-group">
-                            <label class="control-label">Username*</label>
-                            <input class="form-control" type="text" v-model="user.name">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Password*</label>
-                            <input class="form-control" type="password" v-model="user.pass">
+                            <label class="control-label">Email*</label>
+                            <input class="form-control" type="email" required v-model="user.mail">
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <nuxt-link to="/user/password" class="btn btn-link">Forgot your password?</nuxt-link>
+                        <button type="submit" class="btn btn-primary">Send Password Reset Link</button>
+                        <nuxt-link to="/login" class="btn btn-link">Login</nuxt-link>
                     </div>
                 </form>
             </div>
@@ -31,26 +27,31 @@ export default {
         return {
             loading: false,
             user: {
-                name: '',
-                pass: ''
+                mail: ''
             }
         }
     },
-    computed: {
-    },
     methods: {
-        login() {
+        reset() {
             let vm = this;
             vm.$nuxt.$loading.start()
             // this.loading = true;
-            this.$store.dispatch('auth/login', this.user).then(function (response) {
+            this.$store.dispatch('auth/reset', this.user).then(function (response) {
                 vm.$nuxt.$loading.finish()
-                // vm.$store.commit('auth/loginSuccess', response.data)
-                vm.$router.push('/dashboard');
+                vm.notifyResponse('Replacement login information has been send to your mail account.');
+                vm.user = {};
             }).catch(function (error) {
                 vm.$nuxt.$loading.finish()
             });
         },
+        notifyResponse(message, type='success', container='floating', timer=3000) { 
+            this.$swal({
+                type: type,
+                title: message,
+                showConfirmButton: false,
+                timer: timer
+            });
+        }
     },
     mounted () {
         this.$nextTick(() => {

@@ -32,5 +32,11 @@ export default {
     },
     register(method, url, data) {
         return this.execute(method, url, data)
+    },
+    reset(method, url, data) {
+        return this.execute(method, url, data)
+    },
+    resetPass(method, url, data) {
+        return this.execute(method, url, data)
     }
 }

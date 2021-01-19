@@ -46,12 +46,31 @@ export const actions = {
             })
         })
     },
-
     register (context, data) {
         return new Promise((resolve, reject) => {
             api.register('post', '/user/register', data)
             .then(function (response) {
                 context.commit('loginSuccess', {response: response, data: data});
+                resolve(response)
+            }).catch(function (error) {
+                reject(error)
+            })
+        })
+    },
+    reset (context, data) {
+        return new Promise((resolve, reject) => {
+            api.reset('post', '/user/password', data)
+            .then(function (response) {
+                resolve([])
+            }).catch(function (error) {
+                reject(error)
+            })
+        })
+    },
+    resetPass (context, data) {
+        return new Promise((resolve, reject) => {
+            api.resetPass('post', '/cycllup/reset/pass', data)
+            .then(function (response) {
                 resolve(response)
             }).catch(function (error) {
                 reject(error)
