@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-3">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="mb-2 text-center active nav-link">My Profle</a>
-                <a class="mb-2 text-center nav-link" @click.prevent="commmingSoon">My Account</a>
+                <nuxt-link to="/settings/profile" class="mb-2 text-center nav-link active"><a>My Profle</a></nuxt-link>
+                <nuxt-link to="/settings/account" class="mb-2 text-center nav-link"><a>My Account</a></nuxt-link>
                 <a class="mb-2 text-center nav-link" @click.prevent="commmingSoon">My Performance</a>
                 <a class="mb-2 text-center nav-link" @click.prevent="commmingSoon">Display Perferences</a>
                 <a class="mb-2 text-center nav-link" @click.prevent="commmingSoon">Privacy Controls</a>
@@ -175,7 +175,3 @@ export default {
     }
 }
 </script>
-
-<style>
-
-</style>
