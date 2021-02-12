@@ -1,3 +1,3 @@
 export default {
-    drupal_url: 'http://cycllup.ddev.site:8080'
+    drupal_url: 'https://dev-cycllup.pantheonsite.io'
 }
